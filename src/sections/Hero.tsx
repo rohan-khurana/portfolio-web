@@ -1,4 +1,5 @@
 import avatar from '../assets/profile.jpg'
+import { openResumePreview } from '../components/ResumeModal'
 import { profile } from '../data/resume'
 
 export default function Hero() {
@@ -41,13 +42,13 @@ export default function Hero() {
           </div>
 
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a
-              href={profile.resumeUrl}
-              download
+            <button
+              type="button"
+              onClick={openResumePreview}
               className="rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--bg)] transition-transform hover:scale-[1.03]"
             >
               View Resume
-            </a>
+            </button>
             <a
               href="#contact"
               className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm font-medium text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"

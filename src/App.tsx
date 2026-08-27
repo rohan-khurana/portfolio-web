@@ -1,5 +1,7 @@
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import CommandPalette from './components/CommandPalette'
+import ResumeModal from './components/ResumeModal'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Experience from './sections/Experience'
@@ -36,6 +38,8 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <CommandPalette />
+      <ResumeModal />
     </>
   )
 }

@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { nav, profile } from '../data/resume'
+import { OPEN_PALETTE_EVENT } from './CommandPalette'
+import { openResumePreview } from './ResumeModal'
 import ThemeToggle from './ThemeToggle'
+
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform ?? navigator.userAgent)
 
 export default function Navbar() {
   const [active, setActive] = useState<string>('')
@@ -63,17 +67,39 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT))}
+            className="flex items-center gap-2 rounded-full border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--text-faint)] transition-colors hover:border-[var(--accent)] hover:text-[var(--text-muted)]"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <kbd className="font-mono">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
+          </button>
           <ThemeToggle />
-          <a
-            href={profile.resumeUrl}
-            download
+          <button
+            type="button"
+            onClick={openResumePreview}
             className="whitespace-nowrap rounded-full border border-[var(--border)] px-4 py-1.5 text-sm font-medium text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
           >
             Resume
-          </a>
+          </button>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            aria-label="Search"
+            onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT))}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text)]"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
           <ThemeToggle />
           <button
             type="button"
@@ -104,13 +130,16 @@ export default function Navbar() {
               </li>
             ))}
             <li className="pt-2">
-              <a
-                href={profile.resumeUrl}
-                download
-                className="block rounded-md border border-[var(--border)] px-2 py-2.5 text-center text-sm font-medium text-[var(--text)]"
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false)
+                  openResumePreview()
+                }}
+                className="block w-full rounded-md border border-[var(--border)] px-2 py-2.5 text-center text-sm font-medium text-[var(--text)]"
               >
-                Download Resume
-              </a>
+                View Resume
+              </button>
             </li>
           </ul>
         </div>
